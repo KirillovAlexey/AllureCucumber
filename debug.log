@@ -1,0 +1,5 @@
+[0915/165156.130:ERROR:file_io_win.cc(161)] CreateFile C:\Users\Sonne\AppData\Local\Temp\scoped_dir848_1470543439\Crashpad\settings.dat: Error (0x13D) while retrieving error. (0x3)
+[0915/165156.133:ERROR:file_io_win.cc(170)] CreateFile C:\Users\Sonne\AppData\Local\Temp\scoped_dir848_1470543439\Crashpad\reports\742fe6a5-0fab-4f95-8621-627810abff4a.dmp: Error (0x13D) while retrieving error. (0x3)
+[0915/165156.133:ERROR:crash_report_exception_handler.cc(97)] PrepareNewCrashReport failed
+[0918/192648.604:ERROR:process_info.cc(359)] UncheckedAllocate
+[0918/223123.890:ERROR:process_info.cc(359)] UncheckedAllocate
