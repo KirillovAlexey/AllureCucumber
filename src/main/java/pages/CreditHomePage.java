@@ -30,28 +30,30 @@ public class CreditHomePage extends BasePage {
 
     public void initilizeFill() {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();"
-                , driver.findElement(By.xpath("//h2[contains(text(),'Рассчитайте ипотеку')]")));
+                , driver.findElement(By.xpath("//h2[contains(text(),'Р Р°СЃСЃС‡РёС‚Р°Р№С‚Рµ РёРїРѕС‚РµРєСѓ')]")));
         driver.switchTo().frame("iFrameResizer0");
         fillsArea(priceCredit, "5180000");
         waitingChange(firstPay);
         fillsArea(firstPay, "3058000");
+        Wait<WebDriver> wait = new WebDriverWait(driver,10,2000);
+        wait.until(ExpectedConditions.attributeContains(timeToPay,"value","30"));
         fillsArea(timeToPay, "30");
 
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();"
+/*        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();"
                 , driver.findElement(By.xpath("//input[@id='creditTerm']")));
 
         Wait<WebDriver> wait = new WebDriverWait(driver, 5, 2000);
         wait.until(ExpectedConditions.elementToBeClickable(checkCard)).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(checkPayment));
         driver.findElement(checkPayment).click();
-        driver.findElement(youngFamily).click();
+        driver.findElement(youngFamily).click();*/
     }
 
     public void checkAssert() {
-        Assert.assertEquals("Сумма кредита", driver.findElement(amountOfCredit).getAttribute("textContent"), "2 122 000 \u20BD");
-        Assert.assertEquals("Ежемесячный платеж", driver.findElement(monthlyPayment).getAttribute("textContent"), "18 937 \u20BD");
-        Assert.assertEquals("Минимальная ЗП", driver.findElement(requiredIncome).getAttribute("textContent"), "31 561 \u20BD\n");
-        Assert.assertEquals("Процентная ставка", driver.findElement(rate).getAttribute("textContent"), "11%");
+        Assert.assertEquals("РЎСѓРјРјР° РєСЂРµРґРёС‚Р°", driver.findElement(amountOfCredit).getAttribute("textContent"), "2 122 000 \u20BD");
+        Assert.assertEquals("Р•Р¶РµРјРµСЃСЏС‡РЅС‹Р№ РїР»Р°С‚РµР¶", driver.findElement(monthlyPayment).getAttribute("textContent"), "18 937 \u20BD");
+        Assert.assertEquals("РњРёРЅРёРјР°Р»СЊРЅР°СЏ Р—Рџ", driver.findElement(requiredIncome).getAttribute("textContent"), "31 561 \u20BD\n");
+        Assert.assertEquals("РџСЂРѕС†РµРЅС‚РЅР°СЏ СЃС‚Р°РІРєР°", driver.findElement(rate).getAttribute("textContent"), "11%");
     }
 
     public void waitingChange(By by) {
@@ -62,7 +64,7 @@ public class CreditHomePage extends BasePage {
                 return !webDriver.findElement(by).getAttribute("value").equals(oldValue);
             }
         };
-        //действие для изменения значения
+        //РґРµР№СЃС‚РІРёРµ РґР»СЏ РёР·РјРµРЅРµРЅРёСЏ Р·РЅР°С‡РµРЅРёСЏ
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(valueChanged);
     }

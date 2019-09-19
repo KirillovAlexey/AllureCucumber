@@ -35,6 +35,6 @@ public class SberTest {
         BaseSteps.setUp();
         new MainSteps().choiceMenu();
         new FillsSteps().fillText();
-        BaseSteps.driver.quit();
+        //BaseSteps.driver.quit();
     }
 }
