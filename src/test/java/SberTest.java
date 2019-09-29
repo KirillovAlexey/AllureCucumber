@@ -1,13 +1,11 @@
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import pages.CreditHomePage;
 import steps.BaseSteps;
 import steps.FillsSteps;
 import steps.MainSteps;
 
 public class SberTest {
-
-    private static WebDriver driver;
-    private static String url;
 
     @Test
     public void TestApp() {
@@ -35,6 +33,7 @@ public class SberTest {
         BaseSteps.setUp();
         new MainSteps().choiceMenu();
         new FillsSteps().fillText();
-        //BaseSteps.driver.quit();
+        new FillsSteps().check();
+        BaseSteps.tearDown();
     }
 }

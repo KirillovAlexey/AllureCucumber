@@ -1,18 +1,18 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 public class MainPage extends BasePage {
 
-    @FindBy(xpath = "//button[@aria-label='Меню Ипотека']")
+    @FindBy(xpath = "//button[@aria-label='РњРµРЅСЋ РРїРѕС‚РµРєР°']")
     private WebElement fNameMenu;
-    @FindBy(xpath = "//div[@class='kit-grid kit-grid_fixed']//a[contains(text(),'Ипотека на готовое жильё')]")
+    @FindBy(xpath = "//div[@class='kit-grid kit-grid_fixed']//a[contains(text(),'РРїРѕС‚РµРєР° РЅР° РіРѕС‚РѕРІРѕРµ Р¶РёР»СЊС‘')]")
     private WebElement creditForHome;
 
     public void CreditForNewHome() {
-        //Actions actions = new Actions(BaseSteps.getDriver());
         new Actions(BasePage.getDriver()).moveToElement(fNameMenu).build().perform();
         creditForHome.click();
     }

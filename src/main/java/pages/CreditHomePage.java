@@ -1,76 +1,96 @@
 package pages;
 
+import com.google.common.base.Function;
+import io.qameta.allure.Step;
 import org.junit.Assert;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import steps.BaseSteps;
 
-import java.util.function.Function;
 
 public class CreditHomePage extends BasePage {
 
-    private By priceCredit = By.xpath("//input[@id='estateCost']");
-    private By firstPay = By.xpath("//input[@id='initialFee']");
-    private By timeToPay = By.xpath("//input[@id='creditTerm']");
-    private By checkCard = By.xpath("//input[@data-test-id='paidToCard']/..");
-    private By checkPayment = By.xpath("//input[@data-test-id='canConfirmIncome']//..");
-    private By youngFamily = By.xpath("//input[@data-test-id='youngFamilyDiscount']//..");
+    @FindBy(xpath = "//input[@id='estateCost']")
+    WebElement estateCost;
+    @FindBy(xpath = "//input[@id='initialFee']")
+    WebElement initialFee;
+    @FindBy(xpath = "//input[@id='creditTerm']")
+    WebElement creditTerm;
+    @FindBy(xpath = "//span[@data-test-id = 'amountOfCredit']")
+    WebElement amountOfCredit;
+    @FindBy(xpath = "//span[@data-test-id = 'monthlyPayment']")
+    WebElement paidToCard;
+    @FindBy(xpath = "//span[@data-test-id = 'requiredIncome']")
+    WebElement requiredIncome;
+    @FindBy(xpath = "//span[@data-test-id = 'rate']")
+    WebElement rate;
+    @FindBy(xpath = "//span[@data-test-id='monthlyPayment']")
+    WebElement monthlyPayment;
 
-    By amountOfCredit = By.xpath("//span[@data-test-id = 'amountOfCredit']");
-    By monthlyPayment = By.xpath("//span[@data-test-id = 'monthlyPayment']");
-    By requiredIncome = By.xpath("//span[@data-test-id = 'requiredIncome']");
-    By rate = By.xpath("//span[@data-test-id = 'rate']");
+    @FindBy(xpath = "//input[@data-test-id='paidToCard']/..")
+    WebElement checkCard;
+    @FindBy(xpath = "//input[@data-test-id='canConfirmIncome']//..")
+    WebElement checkPayment;
+    @FindBy(xpath = "//input[@data-test-id='youngFamilyDiscount']//..")
+    WebElement youngFamily;
 
     private WebDriver driver = BaseSteps.driver;
+
 
     public void initilizeFill() {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();"
                 , driver.findElement(By.xpath("//h2[contains(text(),'Рассчитайте ипотеку')]")));
         driver.switchTo().frame("iFrameResizer0");
-        fillsArea(priceCredit, "5180000");
-        waitingChange(firstPay);
-        fillsArea(firstPay, "3058000");
-        Wait<WebDriver> wait = new WebDriverWait(driver,10,2000);
-        wait.until(ExpectedConditions.attributeContains(timeToPay,"value","30"));
-        fillsArea(timeToPay, "30");
 
-/*        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();"
+        waitingChange(estateCost, "5180000");
+        waitingChange(initialFee, "3058000");
+        waitingChange(creditTerm, "30");
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();"
                 , driver.findElement(By.xpath("//input[@id='creditTerm']")));
-
-        Wait<WebDriver> wait = new WebDriverWait(driver, 5, 2000);
+        WebDriverWait wait = new WebDriverWait(driver, 5, 1000);
         wait.until(ExpectedConditions.elementToBeClickable(checkCard)).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(checkPayment));
-        driver.findElement(checkPayment).click();
-        driver.findElement(youngFamily).click();*/
+        checkPayment.click();
+        //wait.until(ExpectedConditions.elementToBeClickable(checkPayment)).click();
+        //youngFamily.click();
+        wait.until(ExpectedConditions.elementToBeClickable(youngFamily)).click();
     }
+
 
     public void checkAssert() {
-        Assert.assertEquals("Сумма кредита", driver.findElement(amountOfCredit).getAttribute("textContent"), "2 122 000 \u20BD");
-        Assert.assertEquals("Ежемесячный платеж", driver.findElement(monthlyPayment).getAttribute("textContent"), "18 937 \u20BD");
-        Assert.assertEquals("Минимальная ЗП", driver.findElement(requiredIncome).getAttribute("textContent"), "31 561 \u20BD\n");
-        Assert.assertEquals("Процентная ставка", driver.findElement(rate).getAttribute("textContent"), "11%");
+        WebDriverWait wait = new WebDriverWait(driver, 2, 1000);
+        Assert.assertEquals("Сумма кредита", "2 122 000 \u20BD", amountOfCredit.getAttribute("textContent"));
+        wait.until(ExpectedConditions.textToBePresentInElement(monthlyPayment, "18 937 \u20BD"));
+        Assert.assertEquals("Ежемесячный платеж", "18 937 \u20BD", paidToCard.getAttribute("textContent"));
+        Assert.assertEquals("Необходимый доход", "31 561 \u20BD", requiredIncome.getAttribute("textContent"));
+        Assert.assertEquals("Процентная ставка", "10,2 %", rate.getAttribute("textContent"));
     }
 
-    public void waitingChange(By by) {
-        String oldValue = driver.findElement(by).getAttribute("value");
+    public void waitingChange(WebElement element, String text) {
+        String oldValue = monthlyPayment.getText();
         Function<? super WebDriver, Object> valueChanged = new ExpectedCondition<Object>() {
             @Override
             public Boolean apply(WebDriver webDriver) {
-                return !webDriver.findElement(by).getAttribute("value").equals(oldValue);
+                element.clear();
+                element.sendKeys(text);
+                String newValue = monthlyPayment.getText();
+                return !oldValue.equals(newValue);
             }
         };
         //действие для изменения значения
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, 20, 1000);
         wait.until(valueChanged);
     }
 
-    public void fillsArea(By by, String text) {
-        driver.findElement(by).clear();
-        driver.findElement(by).sendKeys(text);
+    public void fillsArea(WebElement element, String text) {
+        element.clear();
+        element.sendKeys(text);
     }
 }
