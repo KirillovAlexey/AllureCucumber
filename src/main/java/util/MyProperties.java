@@ -7,9 +7,9 @@ import java.util.Properties;
 
 public class MyProperties {
     private static MyProperties INSTANCE = null;
-    private Properties properties = new Properties();
+    private final Properties properties = new Properties();
 
-    public MyProperties() {
+    private MyProperties() {
         try {
             String propertyFileName = System.getProperty("environment", "dev");
             properties.load(new FileInputStream(new File("src/main/resources/" + propertyFileName + ".properties")));

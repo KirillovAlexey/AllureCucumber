@@ -1,9 +1,9 @@
 package pages;
 
-import io.qameta.allure.Step;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindBy;
+        import org.openqa.selenium.WebElement;
+        import org.openqa.selenium.interactions.Actions;
+        import org.openqa.selenium.support.FindBy;
+        import steps.BaseSteps;
 
 public class MainPage extends BasePage {
 
@@ -13,7 +13,7 @@ public class MainPage extends BasePage {
     private WebElement creditForHome;
 
     public void CreditForNewHome() {
-        new Actions(BasePage.getDriver()).moveToElement(fNameMenu).build().perform();
+        new Actions(BaseSteps.getDriver()).moveToElement(fNameMenu).build().perform();
         creditForHome.click();
     }
 }
