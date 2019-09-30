@@ -20,6 +20,7 @@ public class FillsSteps {
             BaseSteps.takeScreenshot();
         } catch (Exception e){
             e.printStackTrace();
+            BaseSteps.takeScreenshot();
         }
         new CreditHomePage().checkAssert(map);
     }

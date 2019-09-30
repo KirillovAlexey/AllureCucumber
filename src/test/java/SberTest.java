@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.Test;
 import steps.BaseSteps;
 import steps.FillsSteps;
@@ -17,16 +18,15 @@ public class SberTest {
         map.put("Ежемесячный платеж", "18 937 \u20BD");
         map.put("Необходимый доход", "31 561 \u20BD");
         map.put("Процентная ставка","11 %");
-        try {
             BaseSteps.setUp();
             new MainSteps().choiceMenu();
             new FillsSteps().fillText(map);
             new FillsSteps().check(map);
             BaseSteps.tearDown();
             BaseSteps.takeScreenshot();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    }
+    @After
+    public void close(){
+        BaseSteps.tearDown();
     }
 }

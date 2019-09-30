@@ -25,7 +25,7 @@ public class CreditHomePage extends BasePage {
     @FindBy(xpath = "//input[@id='creditTerm']")
     private WebElement creditTerm;
 
-    @FindBy(id = "//span[@data-test-id='amountOfCredit']")
+    @FindBy(xpath = "//span[@data-test-id='amountOfCredit']")
     private WebElement amountOfCredit;
     @FindBy(xpath = "//span[@data-test-id='monthlyPayment']")
     private WebElement paidToCard;
@@ -63,11 +63,12 @@ public class CreditHomePage extends BasePage {
         wait.until(ExpectedConditions.textToBePresentInElement(paidToCard, "18 937 \u20BD"));
         driver.switchTo().defaultContent();
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();"
-                , driver.findElement(By.xpath("//h2[contains(text(),'Рассчитайте ипотеку')]")));
+                ,driver.findElement(By.xpath("//h2[contains(text(),'Рассчитайте ипотеку')]")));
     }
 
     @Step
     public void checkAssert(Map<String, String> map) {
+        driver.switchTo().frame("iFrameResizer0");
         Assert.assertEquals("Сумма кредита", map.get("Сумма кредита"), amountOfCredit.getAttribute("textContent"));
         Assert.assertEquals("Ежемесячный платеж", map.get("Ежемесячный платеж"), paidToCard.getAttribute("textContent"));
         Assert.assertEquals("Необходимый доход", map.get("Необходимый доход"), requiredIncome.getAttribute("textContent"));

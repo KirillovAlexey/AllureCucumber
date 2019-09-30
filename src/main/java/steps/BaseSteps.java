@@ -3,8 +3,6 @@ package steps;
 import io.cucumber.java.ru.Когда;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
-import org.junit.After;
-import org.junit.Before;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -19,19 +17,17 @@ public class BaseSteps {
         return driver;
     }
 
-    @Before
     @Step
     @Когда("Подготовка тестовой среды")
     public static void setUp() {
         System.setProperty("webdriver.chrome.driver", MyProperties.getInstance().getProperty("path.chrome"));
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        //driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         driver.get(MyProperties.getInstance().getProperty("url"));
     }
 
-    @After
     @Step
+    @Когда("Конец работы")
     public static void tearDown() {
         getDriver().quit();
     }
