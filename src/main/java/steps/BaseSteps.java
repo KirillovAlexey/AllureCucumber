@@ -1,5 +1,7 @@
 package steps;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.ru.Когда;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
@@ -17,8 +19,9 @@ public class BaseSteps {
         return driver;
     }
 
-    @Step
-    @Когда("Подготовка тестовой среды")
+    //@Step
+    @Before
+    //@Когда("Подготовка тестовой среды")
     public static void setUp() {
         System.setProperty("webdriver.chrome.driver", MyProperties.getInstance().getProperty("path.chrome"));
         driver = new ChromeDriver();
@@ -26,8 +29,9 @@ public class BaseSteps {
         driver.get(MyProperties.getInstance().getProperty("url"));
     }
 
-    @Step
-    @Когда("Конец работы")
+    //@Step
+    //@Когда("Конец работы")
+    @After
     public static void tearDown() {
         getDriver().quit();
     }

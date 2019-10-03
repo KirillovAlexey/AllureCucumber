@@ -60,7 +60,7 @@ public class CreditHomePage extends BasePage {
         checkCard.click();
         wait.until(ExpectedConditions.visibilityOf(checkPayment)).click();
         wait.until(ExpectedConditions.visibilityOf(youngFamily)).click();
-        wait.until(ExpectedConditions.textToBePresentInElement(paidToCard, "18 937 \u20BD"));
+        wait.until(ExpectedConditions.textToBePresentInElement(paidToCard, "18 466 \u20BD"));
         driver.switchTo().defaultContent();
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();"
                 ,driver.findElement(By.xpath("//h2[contains(text(),'Рассчитайте ипотеку')]")));
